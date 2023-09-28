@@ -15,6 +15,12 @@ const Pokemon = ({ pokemons, trainers }) => {
   });
   console.log(trainer);
 
+  const handleRemoveTrainer = () => {
+    // Update the trainer_id property of the pokemon to null
+    pokemon.trainer_id = null;
+    setTrainer(null);
+  };
+
   if (!pokemon) {
     return null;
   }
@@ -24,9 +30,12 @@ const Pokemon = ({ pokemons, trainers }) => {
       <hr />
       <h3>Current Trainer:</h3>
       {trainer ? (
+      <div>
         <Link to={`/trainers/${trainer.id}`}>
           <h5>{trainer.name}</h5>{" "}
         </Link>
+        <button onClick={handleRemoveTrainer}>Remove Trainer</button>
+      </div>
       ) : (
         <h5>No Trainer</h5>
       )}

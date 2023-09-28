@@ -7,10 +7,12 @@ import Trainers from "./Trainers";
 import Pokemon from "./Pokemon";
 import Trainer from "./Trainer";
 import Assign from "./Assign";
+import Create from "./Create";
 
 const App = () => {
   const [pokemons, setPokemons] = useState([]);
   const [trainers, setTrainers] = useState([]);
+  
 
   useEffect(() => {
     const fetchPokemon = async () => {
@@ -45,6 +47,22 @@ const App = () => {
     );
   };
 
+  const createPokemon = async (pokemonName) => {
+    try {
+      // Make a POST request to add the new Pokémon to your database
+      const response = await axios.post("/api/pokemons", {
+        name: pokemonName,
+        // You may need to provide additional data or fields as needed
+      });
+
+      // Update the state with the newly created Pokémon
+      setPokemons([...pokemons, response.data]);
+    } catch (error) {
+      console.error("Error creating Pokémon:", error);
+    }
+  };
+
+
   return (
     <div>
       <h1>Pokemon World</h1>
@@ -76,14 +94,9 @@ const App = () => {
             />
           }
         />
-        <Route 
-        path="/create" 
-        element={
-          <Create
-            createPoke={createPoke}
-            createTrainer={createTrainer}
-          />
-        }
+        <Route
+          path="/create"
+          element={<Create createPokemon={createPokemon} />}
         />
         <Route
           path="/pokemon/:id"
