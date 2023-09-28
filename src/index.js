@@ -62,22 +62,34 @@ const App = () => {
     }
   };
 
+  const createTrainer = async (trainerName) => {
+    try {
+      const response = await axios.post("/api/trainers", {
+        name: trainerName,
+      });
+
+      setTrainers([...trainers, response.data]);
+    } catch (error) {
+      console.error("Error creating trainer:", error);
+    }
+  };
+
 
   return (
     <div>
       <h1>Pokemon World</h1>
       <nav>
         <Link to="/pokemon">
-          <h1>All Pokemon</h1>
+          <button className="css-button-3d--red">All Pokemon</button>
         </Link>
         <Link to="/trainers">
-          <h1>All Trainers</h1>
+        <button className="css-button-3d--red">All Trainers</button>
         </Link>
         <Link to="/assign">
-          <h1>Assign</h1>
+        <button className="css-button-3d--red">Assign</button>
         </Link>
         <Link to="/create">
-          <h1>Create</h1>
+        <button className="css-button-3d--red">Create</button>
         </Link>
       </nav>
 
@@ -96,7 +108,7 @@ const App = () => {
         />
         <Route
           path="/create"
-          element={<Create createPokemon={createPokemon} />}
+          element={<Create createPokemon={createPokemon} createTrainer={createTrainer} />}
         />
         <Route
           path="/pokemon/:id"

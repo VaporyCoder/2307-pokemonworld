@@ -59,4 +59,21 @@ router.post("/pokemons", async (req, res, next) => {
   }
 });
 
+router.post("/trainers", async (req, res, next) => {
+  try {
+    const { name } = req.body;
+
+    const SQL = `
+      INSERT INTO trainers (name)
+      VALUES ($1)
+      RETURNING *
+    `;
+    const response = await client.query(SQL, [name]);
+
+    res.status(201).send(response.rows[0]);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
