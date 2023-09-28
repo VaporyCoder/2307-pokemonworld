@@ -1,21 +1,17 @@
-const pg = require('pg');
-const client = new pg.Client('postgres://localhost/pokemonworld');
+const pg = require("pg");
+const client = new pg.Client("postgres://localhost/pokemonworld");
 
-    const fetchPokemon = async() => {
-        const SQL = `
+const fetchPokemon = async () => {
+  const SQL = `
         SELECT *
         FROM pokemons
-      `
-      const response = await client.query(SQL)
-      return response.rows
-    }
+      `;
+  const response = await client.query(SQL);
+  return response.rows;
+};
 
-  
-  
-  
-
-  const seed = async() => {
-    const SQL = `
+const seed = async () => {
+  const SQL = `
     DROP TABLE IF EXISTS pokemons;
     DROP TABLE IF EXISTS trainers;
 
@@ -30,8 +26,8 @@ const client = new pg.Client('postgres://localhost/pokemonworld');
       trainer_id INT REFERENCES trainers(id)
     );
 
-    INSERT INTO trainers(name) VALUES ('Ash');
-    INSERT INTO trainers(name) VALUES ('Brock');
+    INSERT INTO trainers(name) VALUES ('Ash Ketchum');
+    INSERT INTO trainers(name) VALUES ('Brock Harrison');
     INSERT INTO trainers(name) VALUES ('Misty');
     INSERT INTO trainers(name) VALUES ('Jessie');
     INSERT INTO trainers(name) VALUES ('James');
@@ -39,13 +35,13 @@ const client = new pg.Client('postgres://localhost/pokemonworld');
     INSERT INTO pokemons(name, trainer_id)
       VALUES (
         'Pikachu',
-        (SELECT id FROM trainers WHERE name='Ash')
+        (SELECT id FROM trainers WHERE name='Ash Ketchum')
       );
 
       INSERT INTO pokemons(name, trainer_id)
       VALUES (
         'Geodude',
-        (SELECT id FROM trainers WHERE name='Brock')
+        (SELECT id FROM trainers WHERE name='Brock Harrison')
       );
 
       INSERT INTO pokemons(name, trainer_id)
@@ -78,11 +74,11 @@ const client = new pg.Client('postgres://localhost/pokemonworld');
         null
       );
   `;
-  await client.query(SQL)
-  }
+  await client.query(SQL);
+};
 
-  module.exports = {
-    client,
-    fetchPokemon,
-    seed
-  }
+module.exports = {
+  client,
+  fetchPokemon,
+  seed,
+};

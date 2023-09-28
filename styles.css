@@ -2,7 +2,11 @@ body {
   font-family: verdana;
 }
 
-nav{
+h1 {
+  text-align: center;
+}
+
+nav {
   display: flex;
 }
 
